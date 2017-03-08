@@ -1,0 +1,6 @@
+[submodule "extern/qsbeans"]
+	path = extern/qsbeans
+	url = http://gitlab.brainfuck.pl/adiog/qsbeans
+[submodule "extern/beans"]
+	path = extern/beans
+	url = http://gitlab.brainfuck.pl/adiog/beans
