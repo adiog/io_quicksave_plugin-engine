@@ -4,7 +4,7 @@
 import pybeans
 
 
-@pybeans.register_bean_spec('''
+@pybeans.register_bean_spec('Tag', '''
 {
   "tag_id": "Optional(Int)",
   "user_id": "Optional(Int)",
@@ -18,7 +18,7 @@ class TagBean(pybeans.Bean):
     pass
 
 
-@pybeans.register_bean_spec('''
+@pybeans.register_bean_spec('Item', '''
 {
   "item_id": "Optional(Int)",
   "user_id": "Optional(Int)",
@@ -37,7 +37,7 @@ class ItemBean(pybeans.Bean):
     pass
 
 
-@pybeans.register_bean_spec('''
+@pybeans.register_bean_spec('RichItem', '''
 {
   "item": "Item",
   "tags": "List(Tag)"

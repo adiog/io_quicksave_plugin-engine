@@ -2,7 +2,7 @@ class YouTubePlugin
 {
     static match(item)
     {
-        return ((typeof(item.bean.source_url) != 'undefined') && (item.bean.source_url.indexOf('youtube.com') != -1));
+        return ((typeof(item.bean.item.source_url) != 'undefined') && (item.bean.item.source_url.indexOf('youtube.com') != -1));
     }
 
     static icon(item)
@@ -12,7 +12,13 @@ class YouTubePlugin
 
     static display(item)
     {
-        let dom = document.createElement('div');
+        let dom = document.createElement('iframe');
+        dom.id = 'ytplayer';
+        dom.type = 'text/html'
+        dom.width = 640;
+        dom.height = 360;
+        dom.src = item.bean.item.source_url;
+        dom.frameborder = 0;
         return dom;
     }
 
@@ -23,7 +29,7 @@ class YouTubePlugin
 
     static download(item)
     {
-
+        document.location.href = 'http://fs.quicksave.io/' + item.bean.item.url + '/video.webm';
     }
 }
 
