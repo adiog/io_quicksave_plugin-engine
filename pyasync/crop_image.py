@@ -2,7 +2,7 @@ import PIL
 from PIL import Image
 
 
-def crop_image(input_file, output_file, width=320, height=240):
+def crop_image(input_file, output_file, width=640, height=480):
     img = Image.open(input_file)
     wpercent = (width / float(img.size[0]))
     hsize = int((float(img.size[1]) * float(wpercent)))
