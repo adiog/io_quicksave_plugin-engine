@@ -25,19 +25,23 @@ class Timer(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.end = datetime.datetime.now()
         log('... %s' % (self.message))
-        print('                      Result: %sμs' % (self.end - self.start))
+        print('                      Time: %sμs' % (self.end - self.start))
         print()
+
+
+def get_fs_dir():
+    return os.environ.get('IO_QUICKSAVE_CDN_DIR', '.')
 
 
 def task(name, hash, argument):
     if name == 'thumbnail':
-        thumbnail_file = '/fs.quicksave.io/%s/thumbnail.png' % hash
-        thumbnail_crop = '/fs.quicksave.io/%s/thumbnail_crop.png' % hash
+        thumbnail_file = get_fs_dir() + '/%s/thumbnail.png' % hash
+        thumbnail_crop = get_fs_dir() + '/%s/thumbnail_crop.png' % hash
         save_thumbnail(url=argument, thumbnail_file=thumbnail_file)
         crop_image(thumbnail_file, thumbnail_crop)
     elif name == 'youtube':
         #video_file = '/fs_quicksave_io/%s/video_%%(title)s' % hash
-        video_file = '/fs.quicksave.io/%s/video' % hash
+        video_file = get_fs_dir() + '/%s/video' % hash
         ret_code = subprocess.check_output(['youtube-dl', '--output', video_file, argument])
     else:
         print('nothing to do')

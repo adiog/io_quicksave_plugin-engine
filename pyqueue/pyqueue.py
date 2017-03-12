@@ -1,8 +1,9 @@
 import json
+import os
 from queuelib import FifoDiskQueue
 
 
-fifo_disk_queue_file = '/fs.quicksave.io/queuefile'
+fifo_disk_queue_file = os.environ.get('IO_QUICKSAVE_CDN_DIR', '.') + '/queuefile'
 
 def push(async_spec):
     queue = FifoDiskQueue(fifo_disk_queue_file)

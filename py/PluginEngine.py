@@ -12,7 +12,7 @@ from pyqueue.pyqueue import push
 
 
 def get_fs_dir():
-    return '/fs.quicksave.io'
+    return os.environ.get('IO_QUICKSAVE_CDN_DIR', '.')
 
 
 def UUID():
