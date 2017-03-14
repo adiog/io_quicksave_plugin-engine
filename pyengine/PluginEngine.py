@@ -29,12 +29,17 @@ def main(itemBean):
     uuid = UUID()
     dir = get_dir(uuid)
     itemBean.url = uuid
+    print(itemBean.to_json())
     if itemBean.item_type == 'page':
-        push({'task': 'thumbnail', 'hash': uuid, 'argument': itemBean.source_url})
+        push({'task': 'thumbnail', 'item': itemBean.to_json()})
+        push({'task': 'wget', 'item': itemBean.to_json()})
     print(itemBean.source_url)
     if 'youtube.com' in itemBean.source_url:
         print('youtube')
-        push({'task': 'youtube', 'hash': uuid, 'argument': itemBean.source_url})
+        push({'task': 'youtube', 'item': itemBean.to_json()})
+    if 'github.com' in itemBean.source_url:
+        print('github')
+        push({'task': 'git', 'item': itemBean.to_json()})
     tags = [TagBean(name='chrome')]
     if ('wikipedia' in itemBean.source_url):
         tags.append(TagBean(name='wiki'))

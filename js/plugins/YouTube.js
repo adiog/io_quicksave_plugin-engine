@@ -29,7 +29,7 @@ class YouTubePlugin
 
     static download(item)
     {
-        document.location.href = 'http://fs.quicksave.io/' + item.bean.item.url + '/video.webm';
+        document.location.href = 'https://cdn.quicksave.io/' + item.bean.item.item_id + '/youtube';
     }
 }
 
