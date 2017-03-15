@@ -12,7 +12,7 @@ class Plugin
 
     static display(item)
     {
-        return document.createElement('div');
+        return null;
     }
 
     static menu(item)

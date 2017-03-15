@@ -2,7 +2,7 @@ class GitPlugin
 {
     static match(item)
     {
-        return ((typeof(item.bean.item.source_url) != 'undefined') && (item.bean.item.source_url.indexOf('github.com') != -1));
+        return ((typeof(item.itemBean.source_url) != 'undefined') && (item.itemBean.source_url.indexOf('github.com') != -1));
     }
 
     static icon(item)
@@ -12,7 +12,7 @@ class GitPlugin
 
     static display(item)
     {
-        return $$$(div(), 'git -c http.sslVerify=false clone https://cdn.quicksave.io/' + String(item.bean.item.item_id) + '/git/.git repo');
+        return $$$(div(), 'git -c http.sslVerify=false clone https://cdn.quicksave.io/' + String(item.itemBean.item_id) + '/git/.git repo');
     }
 
     static menu(item, dom)
@@ -22,7 +22,7 @@ class GitPlugin
 
     static download(item)
     {
-        document.location.href = 'https://cdn.quicksave.io/' + item.bean.item.item_id + '/git.tar';
+        document.location.href = 'https://cdn.quicksave.io/' + item.itemBean.item_id + '/git.tar';
     }
 }
 

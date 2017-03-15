@@ -14,7 +14,7 @@ class WikipediaPlugin
     {
         let dom = document.createElement('div');
         let img = document.createElement('img');
-        img.src = 'http://fs.quicksave.io/' + item.bean.item.url + '/thumbnail_crop.png';
+        img.src = 'http://fs.quicksave.io/' + item.itemBean.url + '/thumbnail_crop.png';
         dom.appendChild(img);
         return dom;
     }

@@ -2,7 +2,7 @@ class YouTubePlugin
 {
     static match(item)
     {
-        return ((typeof(item.bean.item.source_url) != 'undefined') && (item.bean.item.source_url.indexOf('youtube.com') != -1));
+        return ((typeof(item.itemBean.source_url) != 'undefined') && (item.itemBean.source_url.indexOf('youtube.com') != -1));
     }
 
     static icon(item)
@@ -17,7 +17,7 @@ class YouTubePlugin
         dom.type = 'text/html'
         dom.width = 640;
         dom.height = 360;
-        dom.src = item.bean.item.source_url;
+        dom.src = item.itemBean.source_url;
         dom.frameborder = 0;
         return dom;
     }
@@ -29,7 +29,7 @@ class YouTubePlugin
 
     static download(item)
     {
-        document.location.href = 'https://cdn.quicksave.io/' + item.bean.item.item_id + '/youtube';
+        document.location.href = 'https://cdn.quicksave.io/' + item.itemBean.item_id + '/youtube';
     }
 }
 

@@ -12,7 +12,7 @@ class SourceCppPlugin
 
     static display(item)
     {
-        return $$$(pre({class: 'prettyprint linenums lang-cpp', style: 'text-align: left'}), item.bean.item.freetext);
+        return $$$(pre({class: 'prettyprint linenums lang-cpp', style: 'text-align: left'}), item.itemBean.freetext);
     }
 
     static menu(item, dom)
