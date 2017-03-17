@@ -17,7 +17,7 @@ class GitPlugin
 
     static menu(item, dom)
     {
-        dom.appendChild(Right(IconButton('download', function(ev) {GitPlugin.download(item)})));
+        dom.appendChild(Left(IconButton('download', function(ev) {GitPlugin.download(item)})));
     }
 
     static download(item)

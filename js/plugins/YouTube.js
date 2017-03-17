@@ -24,7 +24,7 @@ class YouTubePlugin
 
     static menu(item, dom)
     {
-        dom.appendChild(Right(IconButton('download', function(ev) {YouTubePlugin.download(item)})));
+        dom.appendChild(Left(IconButton('download', function(ev) {YouTubePlugin.download(item)})));
     }
 
     static download(item)

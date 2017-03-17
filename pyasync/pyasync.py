@@ -3,20 +3,20 @@
 
 import time
 
-from pyengine.generated.QsBeans import ItemBean
+from pyengine.generated.QsBeans import ItemBean, TaskBean, DoneTaskBean
+from rabbit_poll import rabbit_poll
+from rabbit_push import rabbit_push
 from task.git import git
 from task.thumbnail import thumbnail
 from task.wget import wget
 from task.youtube import youtube
 from util.logger import log
 from util.timer import Timer
-from pyqueue.pyqueue import pop
-
 
 def task(name, item):
     if name == 'git':
         git(item)
-    if name == 'thumbnail':
+    elif name == 'thumbnail':
         thumbnail(item)
     elif name == 'wget':
         wget(item)
@@ -26,16 +26,13 @@ def task(name, item):
         log('WARNING: Unsupported task type: <%s>' % name)
 
 
+def task_callback(task_bean):
+    with Timer('%s' % (task_bean.name)):
+        task(task_bean.name, task_bean.item)
+        rabbit_push('response', DoneTaskBean(name=('done [%s]' % task_bean.name)))
+
 def main():
-    while True:
-        async_spec = pop()
-        if async_spec:
-            item = ItemBean(async_spec['item'])
-            with Timer('%s(item_id=%s, title="%s")' % (async_spec['task'], item.item_id, item.title[:60])):
-                task(async_spec['task'], item)
-        else:
-            log()
-            time.sleep(1)
+    rabbit_poll('request', TaskBean, task_callback)
 
 
 if __name__ == '__main__':

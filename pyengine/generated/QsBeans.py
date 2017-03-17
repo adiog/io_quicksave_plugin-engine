@@ -47,3 +47,35 @@ class ItemBean(pybeans.Bean):
 class RichItemBean(pybeans.Bean):
     pass
 
+
+@pybeans.register_bean_spec('Message', '''
+{
+  "message": "String"
+}
+
+''')
+class MessageBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('Task', '''
+{
+  "name": "String",
+  "item": "Item"
+}
+
+''')
+class TaskBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('DoneTask', '''
+{
+  "name": "String",
+  "text": "Optional(String)"
+}
+
+''')
+class DoneTaskBean(pybeans.Bean):
+    pass
+

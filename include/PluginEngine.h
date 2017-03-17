@@ -14,6 +14,11 @@ public:
     {
         return PythonBeanAPI::call<ItemBean, RichItemBean>("process", itemBean);
     }
+
+    static MessageBean donetask(MessageBean messageBean)
+    {
+        return PythonBeanAPI::call<MessageBean, MessageBean>("donetask", messageBean);
+    }
 };
 
 #endif //QUICKSAVE_PLUGINENGINE_H_H
