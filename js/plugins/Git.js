@@ -1,28 +1,28 @@
 class GitPlugin
 {
-    static match(item)
+    static match(ecmaItem)
     {
-        return ((typeof(item.itemBean.source_url) != 'undefined') && (item.itemBean.source_url.indexOf('github.com') != -1));
+        return ((typeof(ecmaItem.metaBean.source_url) !== 'undefined') && (ecmaItem.metaBean.source_url.indexOf('github.com') != -1));
     }
 
-    static icon(item)
+    static icon(ecmaItem)
     {
         return IconButton('github');
     }
 
-    static display(item)
+    static display(ecmaItem)
     {
-        return $$$(div(), 'git -c http.sslVerify=false clone https://cdn.quicksave.io/' + String(item.itemBean.item_id) + '/git/.git repo');
+        return $$$(div(), 'git -c http.sslVerify=false clone https://cdn.quicksave.io/' + String(ecmaItem.metaBean.item_id) + '/git/.git repo');
     }
 
     static menu(item, dom)
     {
-        dom.appendChild(Left(IconButton('download', function(ev) {GitPlugin.download(item)})));
+        dom.appendChild(Left(IconButton('download', function(ev) {GitPlugin.download(ecmaItem)})));
     }
 
-    static download(item)
+    static download(ecmaItem)
     {
-        document.location.href = 'https://cdn.quicksave.io/' + item.itemBean.item_id + '/git.tar';
+        document.location.href = 'https://cdn.quicksave.io/' + ecmaItem.metaBean.item_hash + '/git.tar';
     }
 }
 

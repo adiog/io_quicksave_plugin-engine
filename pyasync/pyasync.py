@@ -3,7 +3,7 @@
 
 import time
 
-from pyengine.generated.QsBeans import ItemBean, TaskBean, DoneTaskBean
+from pyengine.generated.QsBeans import MetaBean, BackgroundTaskBean
 from rabbit_poll import rabbit_poll
 from rabbit_push import rabbit_push
 from task.git import git
@@ -13,26 +13,28 @@ from task.youtube import youtube
 from util.logger import log
 from util.timer import Timer
 
-def task(name, item):
+def task(name, meta, params):
     if name == 'git':
-        git(item)
+        return git(meta)
     elif name == 'thumbnail':
-        thumbnail(item)
+        return thumbnail(meta)
     elif name == 'wget':
-        wget(item)
+        return wget(meta)
     elif name == 'youtube':
-        youtube(item)
+        return youtube(meta)
     else:
         log('WARNING: Unsupported task type: <%s>' % name)
+        return []
 
 
 def task_callback(task_bean):
     with Timer('%s' % (task_bean.name)):
-        task(task_bean.name, task_bean.item)
-        rabbit_push('response', DoneTaskBean(name=('done [%s]' % task_bean.name)))
+        database_tasks = task(task_bean.name, task_bean.meta, task_bean.kwargs)
+        for database_task in database_tasks:
+            rabbit_push('response', database_task)
 
 def main():
-    rabbit_poll('request', TaskBean, task_callback)
+    rabbit_poll('request', BackgroundTaskBean, task_callback)
 
 
 if __name__ == '__main__':

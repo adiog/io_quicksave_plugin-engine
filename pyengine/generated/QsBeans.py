@@ -6,9 +6,9 @@ import pybeans
 
 @pybeans.register_bean_spec('Tag', '''
 {
-  "tag_id": "Optional(Int)",
-  "user_id": "Optional(Int)",
-  "item_id": "Optional(Int)",
+  "tag_hash": "Optional(String)",
+  "user_hash": "Optional(String)",
+  "meta_hash": "Optional(String)",
   "name": "Optional(String)",
   "value": "Optional(String)"
 }
@@ -18,33 +18,61 @@ class TagBean(pybeans.Bean):
     pass
 
 
-@pybeans.register_bean_spec('Item', '''
+@pybeans.register_bean_spec('Meta', '''
 {
-  "item_id": "Optional(Int)",
-  "user_id": "Optional(Int)",
-  "item_type": "Optional(String)",
-  "title": "Optional(String)",
-  "url": "Optional(String)",
-  "freetext": "Optional(String)",
+  "meta_hash": "Optional(String)",
+  "user_hash": "Optional(String)",
+  "meta_type": "Optional(String)",
+  "icon": "Optional(String)",
+  "name": "Optional(String)",
+  "text": "Optional(String)",
   "author": "Optional(String)",
   "source_title": "Optional(String)",
   "source_url": "Optional(String)",
-  "timestamp": "Optional(String)"
+  "created_at": "Optional(String)",
+  "modified_at": "Optional(String)"
+}
+
+''')
+class MetaBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('File', '''
+{
+  "file_hash": "Optional(String)",
+  "meta_hash": "String",
+  "filename": "String",
+  "filesize": "Int",
+  "mimetype": "String"
+}
+''')
+class FileBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('Action', '''
+{
+  "action_hash": "Optional(String)",
+  "meta_hash": "String",
+  "name": "String",
+  "kwargs": "SerializedDict"
+}
+''')
+class ActionBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('Item', '''
+{
+  "meta": "Meta",
+  "tags": "List(Tag)",
+  "files": "List(File)",
+  "actions": "List(Action)"
 }
 
 ''')
 class ItemBean(pybeans.Bean):
-    pass
-
-
-@pybeans.register_bean_spec('RichItem', '''
-{
-  "item": "Item",
-  "tags": "List(Tag)"
-}
-
-''')
-class RichItemBean(pybeans.Bean):
     pass
 
 
@@ -58,24 +86,24 @@ class MessageBean(pybeans.Bean):
     pass
 
 
-@pybeans.register_bean_spec('Task', '''
+@pybeans.register_bean_spec('BackgroundTask', '''
 {
   "name": "String",
-  "item": "Item"
+  "meta": "Meta",
+  "kwargs": "SerializedDict"
 }
-
 ''')
-class TaskBean(pybeans.Bean):
+class BackgroundTaskBean(pybeans.Bean):
     pass
 
 
-@pybeans.register_bean_spec('DoneTask', '''
+@pybeans.register_bean_spec('DatabaseTask', '''
 {
-  "name": "String",
-  "text": "Optional(String)"
+  "type": "String",
+  "beanname": "String",
+  "beanjson": "SerializedDict"
 }
-
 ''')
-class DoneTaskBean(pybeans.Bean):
+class DatabaseTaskBean(pybeans.Bean):
     pass
 

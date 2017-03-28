@@ -5,14 +5,14 @@
 #define QUICKSAVE_PLUGINENGINE_H
 
 #include <PythonBeanAPI.h>
-#include <bean/RichItemBean.h>
+#include <bean/ItemBean.h>
 
 class PluginEngine
 {
 public:
-    static RichItemBean process(ItemBean itemBean)
+    static ItemBean process(MetaBean metaBean)
     {
-        return PythonBeanAPI::call<ItemBean, RichItemBean>("process", itemBean);
+        return PythonBeanAPI::call<MetaBean, ItemBean>("process", metaBean);
     }
 
     static MessageBean donetask(MessageBean messageBean)

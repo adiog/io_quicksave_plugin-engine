@@ -1,20 +1,20 @@
 class WikipediaPlugin
 {
-    static match(item)
+    static match(ecmaItem)
     {
-        return item.hasTag('wiki');
+        return ecmaItem.hasTag('wiki');
     }
 
-    static icon(item)
+    static icon(ecmaItem)
     {
-        return IconButton('wikipedia');
+        return IconBasicButton('wikipedia primary');
     }
 
-    static display(item)
+    static display(ecmaItem)
     {
         let dom = document.createElement('div');
         let img = document.createElement('img');
-        img.src = 'http://fs.quicksave.io/' + item.itemBean.url + '/thumbnail_crop.png';
+        img.src = env.HTTPS_CDN_QUICKSAVE_IO + '/' + ecmaItem.metaBean.url + '/thumbnail_crop.png';
         dom.appendChild(img);
         return dom;
     }

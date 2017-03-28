@@ -2,12 +2,12 @@
 # Copyright (c) 2017 Aleksander Gajewski <adiog@quicksave.io>.
 
 from PluginEngine import main, do_donetask
-from generated.QsBeans import ItemBean, TagBean, RichItemBean, MessageBean
+from generated.QsBeans import MetaBean, TagBean, ItemBean, MessageBean
 from pybeans import to_string
 
 
-def process(itemBean):
-    return main(itemBean)
+def process(metaBean):
+    return main(metaBean)
 
 
 def donetask(messageBean):

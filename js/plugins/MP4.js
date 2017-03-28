@@ -1,16 +1,16 @@
 class MP4Plugin
 {
-    static match(item)
+    static match(ecmaItem)
     {
-        return item.hasTag('mp4');
+        return ecmaItem.hasTag('mp4');
     }
 
-    static icon(item)
+    static icon(ecmaItem)
     {
         return IconButton('file video outline');
     }
 
-    static display(item)
+    static display(ecmaItem)
     {
         // https://www.w3schools.com/jsref/dom_obj_video.asp
 

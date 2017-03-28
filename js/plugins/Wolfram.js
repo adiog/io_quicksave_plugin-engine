@@ -1,16 +1,16 @@
 class WolframPlugin
 {
-    static match(item)
+    static match(ecmaItem)
     {
-        return ((typeof(item.itemBean.freetext) != 'undefined') && (item.itemBean.freetext.indexOf('$') != -1));
+        return ((typeof(ecmaItem.metaBean.freetext) != 'undefined') && (ecmaItem.metaBean.freetext.indexOf('$') != -1));
     }
 
-    static icon(item)
+    static icon(ecmaItem)
     {
         return IconButton('superscript');
     }
 
-    static display(item)
+    static display(ecmaItem)
     {
         let dom = div();
         return dom;
@@ -29,9 +29,9 @@ class WolframPlugin
         return '7YKHRU-L74LQHJLVE'
     }
 
-    static download(item)
+    static download(ecmaItem)
     {
-        let url = 'https://www.wolframalpha.com/input/?appid=' + WolframPlugin.appid() + '&i=' + item.itemBean.freetext.replace(/\$/g, '');
+        let url = 'https://www.wolframalpha.com/input/?appid=' + WolframPlugin.appid() + '&i=' + ecmaItem.metaBean.text.replace(/\$/g, '');
         console.log(url);
         document.location.href = url;
     }

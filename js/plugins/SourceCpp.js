@@ -1,18 +1,18 @@
 class SourceCppPlugin
 {
-    static match(item)
+    static match(ecmaItem)
     {
-        return item.hasTag('cpp');
+        return ecmaItem.hasTag('cpp');
     }
 
-    static icon(item)
+    static icon(ecmaItem)
     {
         return IconButton('code');
     }
 
-    static display(item)
+    static display(ecmaItem)
     {
-        return $$$(pre({class: 'prettyprint linenums lang-cpp', style: 'text-align: left'}), item.itemBean.freetext);
+        return $$$(pre({class: 'prettyprint linenums lang-cpp', style: 'text-align: left'}), ecmaItem.metaBean.text);
     }
 
     static menu(item, dom)

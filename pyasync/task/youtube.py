@@ -16,3 +16,4 @@ def youtube(item):
         output_file = retrieve_from_string_by_regex(youtube_dl_output, r'Merging formats into "(.*)"')
         subprocess.check_output(['ln', '-s', output_file, youtube_link])
         print(output_file)
+    return []

@@ -13,3 +13,4 @@ def thumbnail(item):
         thumbnail_crop = item_dir + '/thumbnail_crop.png'
         save_thumbnail(url=item.source_url, thumbnail_file=thumbnail_file)
         crop_image(thumbnail_file, thumbnail_crop)
+    return []

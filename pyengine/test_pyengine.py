@@ -1,9 +1,9 @@
 import unittest
 
-from beans import ItemBean
+from beans import MetaBean
 
 
 class PyEngineTestCase(unittest.TestCase):
     def test_bean(self):
-        item = ItemBean('{"freetext": "blabla"}')
+        item = MetaBean('{"freetext": "blabla"}')
         print(item.to_string())
