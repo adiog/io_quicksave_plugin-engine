@@ -1,24 +1,18 @@
 // This file is a part of quicksave project.
 // Copyright (c) 2017 Aleksander Gajewski <adiog@quicksave.io>.
 
-#ifndef QUICKSAVE_PLUGINENGINE_H
-#define QUICKSAVE_PLUGINENGINE_H
+#pragma once
 
 #include <PythonBeanAPI.h>
 #include <bean/ItemBean.h>
+#include <bean/InternalCreateRequestBean.h>
 
 class PluginEngine
 {
 public:
-    static ItemBean process(MetaBean metaBean)
+    static ItemBean process(InternalCreateRequestBean bean)
     {
-        return PythonBeanAPI::call<MetaBean, ItemBean>("process", metaBean);
-    }
-
-    static MessageBean donetask(MessageBean messageBean)
-    {
-        return PythonBeanAPI::call<MessageBean, MessageBean>("donetask", messageBean);
+        return PythonBeanAPI::call<InternalCreateRequestBean, ItemBean>("process", bean);
     }
 };
 
-#endif //QUICKSAVE_PLUGINENGINE_H_H

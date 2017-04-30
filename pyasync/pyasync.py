@@ -11,17 +11,24 @@ from task.thumbnail import thumbnail
 from task.wget import wget
 from task.youtube import youtube
 from util.logger import log
+from util.storage import Sshfs
 from util.timer import Timer
 
-def task(name, meta, params):
+
+def task(name, internalCreateRequest, params):
+    meta = internalCreateRequest.createRequest.meta
+
+    sshfs = Sshfs(internalCreateRequest.storageConnectionString, meta.user_hash, internalCreateRequest.keys)
+    sshfs.init(meta.meta_hash)
+
     if name == 'git':
-        return git(meta)
+        return git(internalCreateRequest, sshfs)
     elif name == 'thumbnail':
-        return thumbnail(meta)
+        return thumbnail(internalCreateRequest, sshfs)
     elif name == 'wget':
-        return wget(meta)
+        return wget(internalCreateRequest, sshfs)
     elif name == 'youtube':
-        return youtube(meta)
+        return youtube(internalCreateRequest, sshfs)
     else:
         log('WARNING: Unsupported task type: <%s>' % name)
         return []
@@ -29,7 +36,7 @@ def task(name, meta, params):
 
 def task_callback(task_bean):
     with Timer('%s' % (task_bean.name)):
-        database_tasks = task(task_bean.name, task_bean.meta, task_bean.kwargs)
+        database_tasks = task(task_bean.name, task_bean.internalCreateRequest, task_bean.kwargs)
         for database_task in database_tasks:
             rabbit_push('response', database_task)
 

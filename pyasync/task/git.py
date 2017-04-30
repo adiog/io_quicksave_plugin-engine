@@ -2,14 +2,19 @@
 # Copyright (c) 2017 Aleksander Gajewski <adiog@quicksave.io>.
 
 import subprocess
-from util.provider import Provider
+import tempfile
+import re
 
-
-def git(item):
-    with Provider(item) as provider:
-        item_dir = provider.path
-        target = item_dir + '/git'
-        subprocess.check_output(['git', 'clone', item.source_url, target])
-        subprocess.check_output(['git', '--git-dir', target+'/.git', 'update-server-info', '--force'])
-        subprocess.check_output(['tar', '-cvf', target + '.tar', target])
+def git(internalCreateRequest, storageProvider):
+    meta = internalCreateRequest.createRequest.meta
+    tmp = tempfile.mkdtemp()
+    source = tmp + '/' + 'git'
+    repo_url = re.sub(r'/$', '', meta.source_url)
+    subprocess.check_output(['git', 'clone', repo_url, source])
+    subprocess.check_output(['tar', '-cvf', source + '.tar', source])
+    item_dir = storageProvider.getMetaPath(meta.meta_hash)
+    target = item_dir + '/git'
+    storageProvider.move(source, target)
+    storageProvider.move(source + '.tar', target + '.tar')
+    return []
 

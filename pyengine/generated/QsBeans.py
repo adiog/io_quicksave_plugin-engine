@@ -76,6 +76,18 @@ class ItemBean(pybeans.Bean):
     pass
 
 
+@pybeans.register_bean_spec('Key', '''
+{
+  "key_hash": "Optional(String)",
+  "user_hash": "String",
+  "name": "String",
+  "value": "String"
+}
+''')
+class KeyBean(pybeans.Bean):
+    pass
+
+
 @pybeans.register_bean_spec('Message', '''
 {
   "message": "String"
@@ -86,10 +98,38 @@ class MessageBean(pybeans.Bean):
     pass
 
 
+@pybeans.register_bean_spec('CreateRequest', '''
+{
+  "meta": "Meta",
+  "attachment": "Optional(Base64)",
+  "attachment_name": "Optional(String)",
+  "attachment_mime_types": "Optional(List(String))",
+  "attachment_provider_id": "Optional(Int)",
+  "hints": "Optional(String)"
+}
+
+''')
+class CreateRequestBean(pybeans.Bean):
+    pass
+
+
+@pybeans.register_bean_spec('InternalCreateRequest', '''
+{
+  "createRequest": "CreateRequest",
+  "keys": "List(Key)",
+  "databaseConnectionString": "String",
+  "storageConnectionString": "String"
+}
+
+''')
+class InternalCreateRequestBean(pybeans.Bean):
+    pass
+
+
 @pybeans.register_bean_spec('BackgroundTask', '''
 {
   "name": "String",
-  "meta": "Meta",
+  "internalCreateRequest": "InternalCreateRequest",
   "kwargs": "SerializedDict"
 }
 ''')
@@ -99,10 +139,12 @@ class BackgroundTaskBean(pybeans.Bean):
 
 @pybeans.register_bean_spec('DatabaseTask', '''
 {
+  "databaseConnectionString": "String",
   "type": "String",
   "beanname": "String",
   "beanjson": "SerializedDict"
 }
+
 ''')
 class DatabaseTaskBean(pybeans.Bean):
     pass
