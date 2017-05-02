@@ -18,5 +18,5 @@ class Timer(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.end = datetime.datetime.now()
         log('... %s' % (self.message))
-        print('                      Time: %sμs' % (self.end - self.start))
+        print('                      Time: %smus' % (self.end - self.start))
         print()

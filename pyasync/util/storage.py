@@ -64,6 +64,7 @@ class Sshfs(LocalStorage):
                         keyFile.write(key.value)
                         keyFile.write('\n')
                     os.chmod(keyPath, 600)
+                    subprocess.check_output(['chmod', '600', keyPath])
 
         os.makedirs(sshPath, exist_ok=True)
 
