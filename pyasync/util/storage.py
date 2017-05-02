@@ -22,6 +22,10 @@ class LocalStorage(object):
     def init(self, metaHash):
         metaPath = self.getMetaPath(metaHash)
         os.makedirs(metaPath, exist_ok=True)
+        try:
+            subprocess.check_output(['mkdir', '-p', metaPath])
+        except:
+            pass
 
     def save(self, metaHash, filename, filebody):
         filePath = self.getFilePath(metaHash, filename)
