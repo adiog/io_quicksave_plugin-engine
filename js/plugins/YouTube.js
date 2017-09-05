@@ -24,12 +24,13 @@ class YouTubePlugin
 
     static menu(item, dom)
     {
-        dom.appendChild(Left(IconButton('download', function(ev) {YouTubePlugin.download(item)})));
+        //dom.appendChild(Left(IconButton('download', function(ev) {YouTubePlugin.download(item)})));
     }
 
     static download(ecmaItem)
     {
-        document.location.href = env.HTTPS_CDN_QUICKSAVE_IO + '/' + ecmaItem.item.meta.meta_hash + '/youtube';
+        //let src = env.HTTPS_CDN_QUICKSAVE_IO + '/' + ecmaItem.itemBean.meta.user_hash + '/' + ecmaItem.itemBean.meta.meta_hash + '/' + file.file_hash + '/' + file.filename;
+        //document.location.href = src;
     }
 }
 

@@ -3,6 +3,10 @@
 
 import subprocess
 
+import os
+
+import re
+from generated.QsBeans import FileBean, DatabaseTaskBean, TagBean
 from util.regex import retrieve_from_string_by_regex
 
 
@@ -15,4 +19,9 @@ def youtube(internalCreateRequest, storageProvider):
     output_file = retrieve_from_string_by_regex(youtube_dl_output, r'Merging formats into "(.*)"')
     subprocess.check_output(['ln', '-s', output_file, youtube_link])
     print(output_file)
-    return []
+    filesize = os.path.getsize(output_file)
+    filename = re.sub(r'.*/', '', output_file)
+    fileBean = FileBean(filename=filename, meta_hash=meta.meta_hash, mimetype='video/mkv', filesize=filesize)
+    tagBean = TagBean(meta_hash=meta.meta_hash, user_hash=meta.user_hash, name='youtube')
+    return [DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='insert', beanname='File', beanjson=fileBean.to_string()),
+            DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='insert', beanname='Tag', beanjson=tagBean.to_string())]

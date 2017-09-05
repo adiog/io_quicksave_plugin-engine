@@ -9,6 +9,18 @@ import getpass
 import shutil
 
 
+class StorageFactory(object):
+    @classmethod
+    def create(cls, connection_string, user_hash, keys):
+        if 'sshfs://' in connection_string:
+            return Sshfs(connection_string, user_hash, keys)
+        elif 'file://' in connection_string:
+            print(connection_string[7:])
+            return LocalStorage(connection_string[7:])
+        else:
+            raise RuntimeError()
+
+
 class LocalStorage(object):
     def __init__(self, path):
         self.path = path
@@ -42,6 +54,9 @@ class LocalStorage(object):
             shutil.rmtree(self.getMetaPath(metaHash))
         else:
             shutil.rmtree(self.getFilePath(metaHash, fileName))
+
+    def move(self, source, target):
+        shutil.move(source, target)
 
 
 class Sshfs(LocalStorage):
