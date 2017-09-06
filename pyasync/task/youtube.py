@@ -21,7 +21,10 @@ def youtube(internalCreateRequest, storageProvider):
     print(output_file)
     filesize = os.path.getsize(output_file)
     filename = re.sub(r'.*/', '', output_file)
-    fileBean = FileBean(filename=filename, meta_hash=meta.meta_hash, mimetype='video/mkv', filesize=filesize)
+    extension = re.sub(r'.*\.', '', filename)
+    fileBean = FileBean(filename=filename, meta_hash=meta.meta_hash, mimetype='video/' + extension, filesize=filesize)
     tagBean = TagBean(meta_hash=meta.meta_hash, user_hash=meta.user_hash, name='youtube')
+    meta.meta_type = 'quicksave/video'
     return [DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='insert', beanname='File', beanjson=fileBean.to_string()),
-            DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='insert', beanname='Tag', beanjson=tagBean.to_string())]
+            DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='insert', beanname='Tag', beanjson=tagBean.to_string()),
+            DatabaseTaskBean(databaseConnectionString=internalCreateRequest.databaseConnectionString, type='update', beanname='Meta', beanjson=meta.to_string())]

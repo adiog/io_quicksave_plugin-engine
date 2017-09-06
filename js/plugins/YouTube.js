@@ -12,6 +12,7 @@ class YouTubePlugin
 
     static display(ecmaItem)
     {
+    /*
         let dom = document.createElement('iframe');
         dom.id = 'ytplayer';
         dom.type = 'text/html'
@@ -19,7 +20,14 @@ class YouTubePlugin
         dom.height = 360;
         dom.src = ecmaItem.item.meta.source_url;
         dom.frameborder = 0;
-        return dom;
+        return dom;*/
+        let file = ecmaItem.files.find(function(file){return file.mimetype.indexOf('video') !== -1;});
+        if (file) {
+            return $$(video({'controls': 'controls'}), source({src: CDN.url(ecmaItem.meta, file), type: file.mime_type}))
+        } else
+        {
+            return div();
+        }
     }
 
     static menu(item, dom)
