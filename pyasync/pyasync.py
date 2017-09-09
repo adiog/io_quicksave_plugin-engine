@@ -7,6 +7,7 @@ from pyengine.generated.QsBeans import MetaBean, BackgroundTaskBean, TagBean, Da
 from rabbit_poll import rabbit_poll
 from rabbit_push import rabbit_push
 from task.git import git
+from task.image import image
 from task.thumbnail import thumbnail
 from task.wget import wget
 from task.youtube import youtube
@@ -23,6 +24,8 @@ def task(name, internalCreateRequest, params):
 
     if name == 'git':
         return git(internalCreateRequest, storage)
+    elif name == 'image':
+        return image(internalCreateRequest, storage)
     elif name == 'thumbnail':
         return thumbnail(internalCreateRequest, storage)
     elif name == 'wget':

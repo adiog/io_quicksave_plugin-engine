@@ -22,6 +22,8 @@ def main(internalCreateRequestBean):
     createRequestBean = internalCreateRequestBean.createRequest
     metaBean = createRequestBean.meta
     print(metaBean.to_json())
+    if metaBean.meta_type == 'image':
+        rabbit_push('request', BackgroundTaskBean(name='image', internalCreateRequest=internalCreateRequestBean, kwargs='{}'))
     if metaBean.meta_type == 'page':
         rabbit_push('request', BackgroundTaskBean(name='thumbnail', internalCreateRequest=internalCreateRequestBean, kwargs='{}'))
         rabbit_push('request', BackgroundTaskBean(name='wget', internalCreateRequest=internalCreateRequestBean, kwargs='{}'))
