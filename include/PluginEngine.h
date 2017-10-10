@@ -4,8 +4,9 @@
 #pragma once
 
 #include <PythonBeanAPI.h>
-#include <bean/ItemBean.h>
-#include <bean/InternalCreateRequestBean.h>
+#include <qsgen/bean/ItemBean.h>
+#include <qsgen/bean/InternalCreateRequestBean.h>
+
 
 class PluginEngine
 {

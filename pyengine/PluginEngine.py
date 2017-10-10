@@ -1,7 +1,6 @@
 # This file is a part of quicksave project.
 # Copyright (c) 2017 Aleksander Gajewski <adiog@quicksave.io>.
 
-import hashlib
 import os
 import random
 import datetime
@@ -9,13 +8,7 @@ import time
 
 from generated.QsBeans import TagBean, MetaBean, ItemBean, BackgroundTaskBean
 
-from pyqueue.pyqueue import push, pop, fifo_disk_response_queue_file
-from pyqueue.pyqueue import fifo_disk_request_queue_file
 from rabbit_push import rabbit_push
-
-
-def UUID():
-    return hashlib.sha224(('%s%s' % (random.random(), datetime.datetime.now())).encode()).hexdigest()
 
 
 def main(internalCreateRequestBean):
@@ -40,6 +33,5 @@ def main(internalCreateRequestBean):
             tags.append(TagBean(name='wiki'))
 
     item = ItemBean(meta=metaBean, tags=tags, files=[], actions=[])
-    #print(item.to_string())
     return item
 
